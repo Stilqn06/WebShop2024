@@ -73,7 +73,7 @@ namespace WebShopApp.Areas.Identity.Pages.Account
             public string FirstName { get; set; }
 
             [Required]
-            [StringLength(20, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [StringLength(20, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 3)]
             
             [Display(Name = "Last Name")]
             public string LastName { get; set; }
@@ -128,6 +128,7 @@ namespace WebShopApp.Areas.Identity.Pages.Account
                 var result=await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
+                    _userManager.AddToRoleAsync(user, "Client").Wait();
                     await _signInManager.SignInAsync(user,isPersistent: false); 
                     return LocalRedirect(returnUrl);
                 }
