@@ -13,4 +13,7 @@
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.30" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.30" />
 	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\WebShopApp.Infrastructure\WebShopApp.Infrastructure.csproj" />
+	</ItemGroup>
 </Project>
