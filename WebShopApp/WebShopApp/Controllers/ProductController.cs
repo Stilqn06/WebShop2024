@@ -5,6 +5,7 @@ using WebShopApp.Models.Category;
 using WebShopApp.Core.Contracts;
 using WebShopApp.Models.Product;
 using WebShopApp.Infrastructure.Data.Entities;
+using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
 
 namespace WebShopApp.Controllers
 {
@@ -42,7 +43,25 @@ namespace WebShopApp.Controllers
         // GET: ProductController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+           Product item=_productService.GetProductById(id);
+            if(item== null)
+            {
+                return NotFound();
+            }
+            ProductDetailsVM product = new ProductDetailsVM()
+            {
+                Id = item.Id,
+                ProductName = item.ProductName,
+                BrandId = item.BrandId,
+                BrandName = item.Brand.BrandName,
+                CategoryId = item.CategoryId,
+                CategoryName = item.Category.CategoryName,
+                Picture = item.Picture,
+                Quantity = item.Quantity,
+                Price = item.Price,
+                Discount = item.Discount,
+            };
+            return View(product);
         }
 
         // GET: ProductController/Create
