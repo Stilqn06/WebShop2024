@@ -6,9 +6,11 @@ using WebShopApp.Core.Contracts;
 using WebShopApp.Models.Product;
 using WebShopApp.Infrastructure.Data.Entities;
 using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebShopApp.Controllers
 {
+    [Authorize(Roles ="Administrator")]
     public class ProductController : Controller
     {
        private readonly IProductService _productService;
@@ -20,7 +22,7 @@ namespace WebShopApp.Controllers
             _categoryService = categoryService;
             _brandService = brandService;
         }
-
+        [AllowAnonymous]
         public ActionResult Index( string searchStringCategoryName, string searchStringBrandName)
         {
        List<ProductIndexVM> products = _productService.GetProducts(searchStringCategoryName,searchStringBrandName).Select(product=>new ProductIndexVM
@@ -39,7 +41,7 @@ namespace WebShopApp.Controllers
        }).ToList();
             return View(products);  
         }
-
+        [AllowAnonymous]
         // GET: ProductController/Details/5
         public ActionResult Details(int id)
         {
@@ -63,7 +65,7 @@ namespace WebShopApp.Controllers
             };
             return View(product);
         }
-
+        [AllowAnonymous]
         // GET: ProductController/Create
         public ActionResult Create()
         {
@@ -81,7 +83,7 @@ namespace WebShopApp.Controllers
             }).ToList() ;
             return View(product);
         }
-
+        [AllowAnonymous]
         // POST: ProductController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -98,7 +100,7 @@ namespace WebShopApp.Controllers
             }
             return View();
         }
-
+        [AllowAnonymous]
         // GET: ProductController/Edit/5
         public ActionResult Edit(int id)
         {
@@ -125,7 +127,7 @@ namespace WebShopApp.Controllers
             }).ToList();
             return View(updateProduct);
         }
-
+        [AllowAnonymous]
         // POST: ProductController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -141,26 +143,51 @@ namespace WebShopApp.Controllers
             }
             return View(product);   
         }
-
+        [AllowAnonymous]
         // GET: ProductController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+           Product item=_productService.GetProductById(id);
+            if (item == null)
+            {
+                return NotFound();  
+            }
+            ProductDeleteVM product = new ProductDeleteVM()
+            {
+                Id = item.Id,
+                ProductName = item.ProductName,
+                BrandName = item.Brand.BrandName,
+                BrandId = item.BrandId,
+                CategoryName = item.Category.CategoryName,
+                CategoryId = item.CategoryId,
+                Picture = item.Picture,
+                Quantity = item.Quantity,
+                Price = item.Price,
+                Discount = item.Discount
+            };
+            return View(product);
+          
         }
-
+        [AllowAnonymous]
         // POST: ProductController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
         {
-            try
+            var deleted = _productService.RemoveById(id);
+            if (deleted)
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Success");
             }
-            catch
+            else
             {
                 return View();
             }
+        }
+        [AllowAnonymous]
+        public IActionResult Success()
+        {
+            return View();
         }
     }
 }
