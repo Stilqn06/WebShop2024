@@ -10,6 +10,20 @@ namespace WebShopApp.Infrastructure.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<string>(
+              name: "FirstName",
+              table: "AspNetUsers",
+              type: "nvarchar(30)",
+              maxLength: 30,
+              nullable: true);
+
+            migrationBuilder.AddColumn<string>(
+                name: "LastName",
+                table: "AspNetUsers",
+                type: "nvarchar(30)",
+                maxLength: 30,
+                nullable: true);
+
+            migrationBuilder.AddColumn<string>(
                 name: "Address",
                 table: "AspNetUsers",
                 type: "nvarchar(30)",
@@ -23,19 +37,7 @@ namespace WebShopApp.Infrastructure.Migrations
                 nullable: false,
                 defaultValue: "");
 
-            migrationBuilder.AddColumn<string>(
-                name: "FirstName",
-                table: "AspNetUsers",
-                type: "nvarchar(30)",
-                maxLength: 30,
-                nullable: true);
-
-            migrationBuilder.AddColumn<string>(
-                name: "LastName",
-                table: "AspNetUsers",
-                type: "nvarchar(30)",
-                maxLength: 30,
-                nullable: true);
+          
 
             migrationBuilder.CreateTable(
                 name: "Brands",
@@ -147,6 +149,14 @@ namespace WebShopApp.Infrastructure.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropColumn(
+              name: "FirstName",
+              table: "AspNetUsers");
+
+            migrationBuilder.DropColumn(
+              name: "LastName",
+              table: "AspNetUsers");
+
             migrationBuilder.DropTable(
                 name: "Orders");
 
@@ -167,13 +177,9 @@ namespace WebShopApp.Infrastructure.Migrations
                 name: "Discriminator",
                 table: "AspNetUsers");
 
-            migrationBuilder.DropColumn(
-                name: "FirstName",
-                table: "AspNetUsers");
+          
 
-            migrationBuilder.DropColumn(
-                name: "LastName",
-                table: "AspNetUsers");
+          
         }
     }
 }
