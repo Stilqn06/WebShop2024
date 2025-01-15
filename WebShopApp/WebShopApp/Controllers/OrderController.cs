@@ -46,7 +46,7 @@ namespace WebShopApp.Controllers
             var product = _productService.GetProductById(bindingModel.ProductId);
             if (currentUserId == null || product == null || product.Quantity < bindingModel.Quantity || product.Quantity == 0)
             {
-                return RedirectToAction("Denied", "Order");
+                return RedirectToAction("Denied","Order");
               
 
             }
@@ -55,7 +55,7 @@ namespace WebShopApp.Controllers
                 _orderService.Create(bindingModel.ProductId, currentUserId, bindingModel.Quantity);
 
             }
-            return RedirectToAction("Index", "Product");
+            return this.RedirectToAction("Index","Product");
         }
         public ActionResult Denied()
         {
@@ -68,7 +68,7 @@ namespace WebShopApp.Controllers
             List<OrderIndexVM>orders= _orderService.GetOrders().Select(x=>new OrderIndexVM
             {
                 Id = x.Id,
-                OrderDate = x.OrderDate.ToString("dd-MMM-yyyy hh:m", CultureInfo.InvariantCulture),
+                OrderDate = x.OrderDate.ToString("dd-MMM-yyyy HH:mm", CultureInfo.InvariantCulture),
                 UserId = x.UserId,
                 User = x.User.UserName,
                 ProductId = x.ProductId,
@@ -89,7 +89,7 @@ namespace WebShopApp.Controllers
                 .Select(x => new OrderIndexVM
                 {
                    Id=x.Id,
-                   OrderDate=x.OrderDate.ToString("dd-MMM-yyyy HH:m",CultureInfo.InvariantCulture),
+                   OrderDate=x.OrderDate.ToString("dd-MMM-yyyy HH:mm",CultureInfo.InvariantCulture),
                    UserId = x.UserId,
                    User=x.User.UserName,
                    ProductId=x.ProductId,

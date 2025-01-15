@@ -49,14 +49,26 @@
 
 <script>
     function calcSum() {
-        let q = document.getElementsByName('Quantity')[0].value;
-        let p = document.getElementsByName('Price')[0].value;
-        let d = document.getElementsByName('Discount')[0].value;
-        let sum = Number(q) * (Number(p) - Number(p) * Number(d) / 100);
-        document.getElementsByName('TotalPrice')[0].value = sum.toFixed(2)
+        // Вземи стойностите
+        let q = parseFloat(document.querySelector('[name="Quantity"]').value) || 0;
+        let p = parseFloat(document.querySelector('[name="Price"]').value) || 0;
+        let d = parseFloat(document.querySelector('[name="Discount"]').value) || 0;
+
+        // Изчисли сумата
+        let sum = q * (p - (p * d / 100));
+
+        // Задай стойността
+        document.querySelector('[name="TotalPrice"]').value = sum.toFixed(2);
     }
-    document.getElementById('Quantity').max = @Model.QuantityStock;
-    document.getElementById('Quantity').min = 1;
+
+    // Задай ограниченията за количество
+    document.addEventListener('DOMContentLoaded', function () {
+        let quantityInput = document.querySelector('[name="Quantity"]');
+        if (quantityInput) {
+            quantityInput.max = @Model.QuantityStock;
+            quantityInput.min = 1;
+        }
+    });
 </script>
 
 @section Scripts {

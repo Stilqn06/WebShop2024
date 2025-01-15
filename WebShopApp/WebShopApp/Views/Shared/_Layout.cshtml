@@ -43,22 +43,11 @@
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                     <li><a class="dropdown-item" href="/Statistics/Clients">Clients</a></li>
-                                    <li><a class="dropdown-item" href="/Statistics/Orders">Orders</a></li>
+                                    <li><a class="dropdown-item" href="/Order/Index">Orders</a></li>
                                 </ul>
                             </li>
                         }
-                        @if ((User.Identity.IsAuthenticated) && (User.IsInRole("Administrator")))
-                        {
-                            <li class="dropdown">
-                                <button class="btn btn-secondary dropdown-toggle"  type="button" id="dropdownMenuButton1"
-                                data-bs-toggle="dropdown" aria-expanded="false"></button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                <li><a class="dropdown-item" href="/Statistics/Clients">Clients</a></li>
-                                    <li><a class="dropdown-item" href="/Order/Index">Orders</a></li>
-
-                            </ul>
-                            </li>
-                        }
+                      
 
                     </ul>
                   

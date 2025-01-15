@@ -95,7 +95,7 @@
                     }
                     <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-success">Details</a>
                     @if ((User.Identity.IsAuthenticated)){
-                        <a asp-controller="Create" asp-action="Order" asp-route-id="@item.Id" class="btn btn-warning">Order</a>
+                        <a asp-controller="Order" asp-action="Create" asp-route-id="@item.Id" class="btn btn-warning">Order</a>
                     }
                     @if ((User.Identity.IsAuthenticated) && (User.IsInRole("Administrator")))
                     {
