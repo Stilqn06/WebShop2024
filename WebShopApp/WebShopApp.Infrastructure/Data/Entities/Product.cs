@@ -27,7 +27,7 @@ namespace WebShopApp.Infrastructure.Data.Entities
         [Range(0,5000)]
         public int Quantity { get; set; } 
         public decimal Price { get; set; }  
-        public Decimal Discount { get; set; }
+        public decimal Discount { get; set; }
         public virtual IEnumerable<Order> Orders { get; set; } = new List<Order>();
     }
 
