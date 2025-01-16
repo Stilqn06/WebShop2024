@@ -125,6 +125,11 @@ namespace WebShopApp.Controllers
                 Id = b.Id,
                 Name = b.BrandName
             }).ToList();
+            updateProduct.Categories = _categoryService.GetCategories().Select(b => new CategoryPairVM()
+            {
+                Id = b.Id,
+                Name = b.CategoryName
+            }).ToList();
             return View(updateProduct);
         }
         [AllowAnonymous]
